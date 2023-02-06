@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-const uri = process.env.MONGO_URI;
+const uri = process.env.MONGO_URI; // update uri in .env file
 const client = new MongoClient(uri);
 let db;
 
