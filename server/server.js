@@ -1,7 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
-import { connectDb } from './db/mongo.js';
+import { connectDb, getCol } from './db/mongo.js';
+import { data } from './data.js';
+import userRouter from './routes/users/router.js';
+import companyRouter from './routes/companies/router.js';
+import requestRouter from './routes/requests/router.js';
+import badgeRouter from './routes/badges/router.js';
+import logRouter from './routes/logs/router.js';
 // import path from 'path';
 
 dotenv.config();
@@ -16,6 +22,33 @@ app.listen(port, () => {
 });
 
 app.get('/api', async (req, res) => res.send('API'));
+app.use('/api/users', userRouter);
+app.use('/api/companies', companyRouter);
+app.use('/api/requests', requestRouter);
+app.use('/api/badges', badgeRouter);
+app.use('/api/logs', logRouter);
+
+app.get('/api/reset', async (req, res) => {
+  const { users, companies, requests, badges, logs } = data;
+  const userCol = await getCol('users');
+  const companyCol = await getCol('companies');
+  const requestCol = await getCol('requests');
+  const badgeCol = await getCol('badges');
+  const logCol = await getCol('logs');
+
+  userCol.deleteMany();
+  userCol.insertMany(users);
+  companyCol.deleteMany();
+  companyCol.insertMany(companies);
+  requestCol.deleteMany();
+  requestCol.insertMany(requests);
+  badgeCol.deleteMany();
+  badgeCol.insertMany(badges);
+  logCol.deleteMany();
+  logCol.insertMany(logs);
+
+  res.send('DB Collections Reset');
+});
 
 //** Server Side Rendering Setup */
 // const dir = path.resolve();

@@ -9,7 +9,7 @@ let db;
 export const connectDb = () => {
   try {
     client.connect();
-    db = client.db(''); // insert db name
+    db = client.db('visitor-kiosk'); // insert db name
     console.log('Connected to MongoClient');
   } catch (err) {
     console.log(err);
