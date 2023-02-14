@@ -1,0 +1,32 @@
+import React from 'react';
+import { formatWindow } from '../../../utils';
+
+export const Active = ({ active }) => {
+  return (
+    <div className="Active">
+      <div className="nav">
+        <h2>Active Requests</h2>
+        <div className="filters">
+          <h4>All</h4>
+          <h4>Today</h4>
+          <h4>This Week</h4>
+          <h4>This Month</h4>
+        </div>
+      </div>
+      <div className="requests">
+        {active &&
+          active.map((req) => (
+            <div key={req._id} value={req._id} className="req">
+              <h3>{req.name}</h3>
+              <h4>{formatWindow(req.window.start, req.window.end)}</h4>
+              <div className="visitors">
+                {req.visitors.map((vis) => (
+                  <h5 key={vis.user_id}>{vis.user_name}</h5>
+                ))}
+              </div>
+            </div>
+          ))}
+      </div>
+    </div>
+  );
+};
