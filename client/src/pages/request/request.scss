@@ -1,0 +1,110 @@
+#Request {
+  .container {
+    display: grid;
+    gap: 1em;
+    &.client {
+    }
+    &.not_client {
+      .Visitors > .header > div {
+        display: none;
+      }
+    }
+    .Info,
+    .Visitors,
+    .Logs {
+      padding: 1em;
+      border: 2px solid var(--gray2);
+    }
+    .Info {
+      h2,
+      .status {
+        display: inline-block;
+      }
+      h2,
+      .window {
+        color: var(--blue1);
+      }
+      .window {
+        margin: 0.5em 0;
+      }
+      .status {
+        margin-left: 1em;
+        padding: 0.25em 0.5em;
+        border-radius: 1em;
+        &.active {
+          color: var(--green1);
+          background-color: var(--green2);
+        }
+        &.pending {
+          color: var(--orange1);
+          background-color: var(--orange2);
+        }
+        &.cancelled {
+          color: var(--red1);
+          background-color: var(--red2);
+        }
+      }
+      h4 {
+        margin-bottom: 0.5em;
+      }
+    }
+    .Visitors {
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        margin-bottom: 1em;
+        button {
+          margin-right: 0.5em;
+          padding: 0.25em;
+          color: var(--blue1);
+          background-color: var(--blue2);
+          border: 1px solid var(--blue1);
+          border-radius: 8px;
+        }
+      }
+      .cards {
+        display: flex;
+        gap: 1em;
+        .visitor {
+          min-width: 150px;
+          min-height: 200px;
+          padding: 0.5em;
+          border: 2px solid var(--gray2);
+          border-radius: 8px;
+          &:hover {
+            color: var(--blue1);
+            background-color: var(--blue2);
+            border-color: var(--blue1);
+          }
+          .status {
+            display: inline-block;
+            padding: 0.25em 0.5em;
+            border-radius: 8px;
+            &.in {
+              color: var(--green1);
+              background-color: var(--green2);
+            }
+            &.out {
+              color: var(--red1);
+              background-color: var(--red2);
+            }
+          }
+          h3 {
+            color: var(--blue1);
+          }
+          h5 {
+            display: inline-block;
+            padding: 0.5em 0.75em;
+            margin: 0.5em 0;
+            border-radius: 50%;
+            color: var(--white);
+            background-color: var(--gray2);
+          }
+        }
+      }
+    }
+    .Log {
+    }
+  }
+}

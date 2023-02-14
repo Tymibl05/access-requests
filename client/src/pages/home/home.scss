@@ -5,9 +5,9 @@
     gap: 1em;
     &.client {
       grid-template-columns: 1fr 3fr;
-      grid-template-rows: 2fr 1fr;
+      // grid-template-rows: 2fr 1fr;
     }
-    &.visitor {
+    &.not_client {
       grid-template-columns: 1fr;
       grid-column-gap: 0;
     }
@@ -16,17 +16,43 @@
     }
     // STYLES
     .Onsite,
+    .Active {
+      height: 55vh;
+      .header {
+        background-color: var(--gray4);
+        position: sticky;
+        top: 0;
+        z-index: 5;
+      }
+    }
+    .Onsite,
     .Active,
     .Pending {
       //background-color: var(--gray3);
       border: 2px solid var(--gray2);
       overflow-y: scroll;
+      .header {
+        padding: 0.75em 1em;
+        border-bottom: 2px solid var(--gray1);
+        h2 {
+          display: inline;
+          padding: 0.05em 0.25em;
+          border-radius: 12px;
+        }
+      }
+      .req,
+      .vis {
+        cursor: pointer;
+      }
     }
     .Onsite {
-      h2 {
-        text-align: center;
-        padding: 0.25em 0;
-        border-bottom: 2px solid var(--gray1);
+      text-align: center;
+      .header {
+        border-color: var(--blue1);
+        h2 {
+          color: var(--blue1);
+          background-color: var(--blue2);
+        }
       }
       .visitors {
         .vis {
@@ -34,20 +60,27 @@
           &:hover {
             color: var(--blue1);
             background-color: var(--blue2);
-            border-left: 2px solid var(--blue1);
+            border-bottom: 3px solid var(--blue1);
             border-radius: 4px;
             overflow: hidden;
+          }
+          h4,
+          h6 {
+            color: var(--blue1);
           }
         }
       }
     }
     .Active {
-      .nav {
+      .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.5em 1em;
-        border-bottom: 2px solid var(--gray1);
+        border-color: var(--green1);
+        h2 {
+          color: var(--green1);
+          background-color: var(--green2);
+        }
         .filters {
           display: flex;
           gap: 0.5em;
@@ -56,16 +89,21 @@
       .requests {
         .req {
           padding: 0.5em;
-          margin: 0.5em;
+          margin: 1em;
           //background-color: var(--gray3);
           border: 2px solid var(--gray2);
           border-radius: 4px;
           &:hover {
             color: var(--blue1);
             background-color: var(--blue2);
-            border-left: 2px solid var(--blue1);
+            border-color: transparent;
+            border-left: 3px solid var(--blue1);
             border-radius: 4px;
             overflow: hidden;
+          }
+          h3,
+          h5 {
+            color: var(--green1);
           }
           h4 {
             padding: 0.5em 0;
@@ -73,6 +111,37 @@
           .visitors {
             display: flex;
             gap: 1em;
+          }
+        }
+      }
+    }
+    .Pending {
+      .header {
+        border-color: var(--orange1);
+        h2 {
+          color: var(--orange1);
+          background-color: var(--orange2);
+        }
+      }
+      .requests {
+        display: flex;
+        overflow-x: scroll;
+        .req {
+          margin: 1em 0.5em;
+          padding: 0.5em;
+          width: 350px;
+          height: 200px;
+          overflow-y: scroll;
+          border: 2px solid var(--gray2);
+          border-radius: 4px;
+          &:hover {
+            color: var(--blue1);
+            background-color: var(--blue2);
+            border-color: var(--blue1);
+          }
+          h3,
+          h5 {
+            color: var(--orange1);
           }
         }
       }

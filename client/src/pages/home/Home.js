@@ -22,7 +22,8 @@ export const Home = () => {
     const res = await fetch(url);
     if (!res.ok) {
       const error = await res.json();
-      return console.log(error.message);
+      console.log(error.message);
+      return;
     }
     const result = await res.json();
     return result;
@@ -32,7 +33,8 @@ export const Home = () => {
     const res = await fetch(url);
     if (!res.ok) {
       const error = await res.json();
-      return console.log(error.message);
+      console.log(error.message);
+      return;
     }
     const result = await res.json();
     return result;
@@ -56,7 +58,7 @@ export const Home = () => {
 
   return (
     <div id="Home">
-      <div className={`container ${user.is_client ? 'client' : 'visitor'}`}>
+      <div className={`container ${user.is_client ? 'client' : 'not_client'}`}>
         {user.is_client && <Onsite onsite={onsite} />}
         <Active active={filtered.active} />
         <Pending pending={filtered.pending} />

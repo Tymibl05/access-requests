@@ -36,16 +36,16 @@ app.get('/api/reset', async (req, res) => {
   const badgeCol = await getCol('badges');
   const logCol = await getCol('logs');
 
-  userCol.deleteMany();
-  userCol.insertMany(users);
-  companyCol.deleteMany();
-  companyCol.insertMany(companies);
-  requestCol.deleteMany();
-  requestCol.insertMany(requests);
-  badgeCol.deleteMany();
-  badgeCol.insertMany(badges);
-  logCol.deleteMany();
-  logCol.insertMany(logs);
+  await userCol.deleteMany();
+  await userCol.insertMany(users);
+  await companyCol.deleteMany();
+  await companyCol.insertMany(companies);
+  await requestCol.deleteMany();
+  await requestCol.insertMany(requests);
+  await badgeCol.deleteMany();
+  await badgeCol.insertMany(badges);
+  await logCol.deleteMany();
+  await logCol.insertMany(logs);
 
   res.send('DB Collections Reset');
 });

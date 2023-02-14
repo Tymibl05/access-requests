@@ -1,7 +1,7 @@
 :root {
   --white: #dddddd;
   --gray1: rgb(127, 133, 139);
-  --gray2: rgb(48, 51, 56);
+  --gray2: rgb(75, 78, 84);
   --gray3: rgb(38, 42, 48);
   --gray4: rgb(21, 24, 25);
   --blue1: rgb(1, 175, 255);
@@ -10,7 +10,7 @@
   --blue4: rgb(2, 11, 38);
   --green1: rgb(37, 161, 53);
   --green2: rgb(23, 99, 61);
-  --orange1: rgb(210, 86, 9);
+  --orange1: rgb(230, 99, 17);
   --orange2: rgb(148, 67, 16);
   --red1: rgb(255, 0, 0);
   --red2: rgb(143, 20, 20);
@@ -25,7 +25,7 @@
 }
 *::-webkit-scrollbar {
   width: 4px;
-  height: 8px;
+  height: 6px;
 }
 *::-webkit-scrollbar-track {
   background: transparent;
@@ -49,4 +49,17 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a {
+  color: unset;
+  text-decoration: unset;
+}
+
+button,
+.bounce:hover {
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.05);
+  }
 }

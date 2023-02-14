@@ -37,12 +37,15 @@ export const getOnsite = async (req, res) => {
       {
         $lookup: {
           from: 'requests',
-          let: { uid: '$_id' },
+          let: { uid: '$_id', uname: '$name' },
           pipeline: [
             {
               $match: {
                 $expr: {
-                  $in: [{ user_id: '$$uid', is_onsite: true }, '$visitors'],
+                  $in: [
+                    { user_id: '$$uid', user_name: '$$uname', is_onsite: true },
+                    '$visitors',
+                  ],
                 },
               },
             },
@@ -100,4 +103,83 @@ export const getUserName = async (req, res) => {
     { projection: { _id: 0, name: 1 } }
   );
   res.send({ name: user.name });
+};
+
+export const getUserCompany = async (req, res) => {
+  const { user_id } = req.params;
+  if (user_id.length !== 24)
+    return res.status(400).send({ message: 'User Does Not Exist' });
+
+  const userCol = await getCol('users');
+  const agg = await userCol
+    .aggregate([
+      { $match: { _id: user_id } },
+      {
+        $lookup: {
+          from: 'companies',
+          localField: 'company_id',
+          foreignField: '_id',
+          as: 'company',
+        },
+      },
+      { $unwind: '$company' },
+      { $project: { company_name: '$company.name' } },
+    ])
+    .toArray();
+
+  if (agg.length === 0)
+    return res.status(404).send({ message: 'User Not Found' });
+
+  return res.send(agg[0]);
+};
+
+export const getUserBadge = async (req, res) => {
+  // needs update to match isonsite =true AND req = req =  -- all requests with user shows they has a badge
+  const { user_id } = req.params;
+  if (user_id.length !== 24)
+    return res.status(400).send({ message: 'Badge Does Not Exist' });
+
+  const userCol = await getCol('users');
+  const agg = await userCol
+    .aggregate([
+      { $match: { _id: user_id } },
+      {
+        $lookup: {
+          from: 'badges',
+          localField: '_id',
+          foreignField: 'assigned_to',
+          as: 'badge',
+        },
+      },
+      { $unwind: '$badge' },
+      {
+        $lookup: {
+          from: 'requests',
+          let: { uid: '$_id', uname: '$name' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $in: [
+                    { user_id: '$$uid', user_name: '$$uname', is_onsite: true },
+                    '$visitors',
+                  ],
+                },
+              },
+            },
+          ],
+          as: 'request',
+        },
+      },
+      { $unwind: '$request' },
+      {
+        $project: { badge_number: '$badge.number', request_id: '$request._id' },
+      },
+    ])
+    .toArray();
+
+  if (agg.length === 0)
+    return res.status(404).send({ message: 'Badge Not Found' });
+
+  return res.send(agg[0]);
 };

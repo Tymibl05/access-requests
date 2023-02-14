@@ -158,10 +158,6 @@ export const data = {
   requests: [
     {
       name: 'REQ0000001', // REQ00000000
-      requester: {
-        user_id: '00000000000000000mbarnes',
-        company_id: '111111111111111111costco',
-      },
       description:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
       status: 'active', // active, pending, completed, cancelled
@@ -189,10 +185,6 @@ export const data = {
     },
     {
       name: 'REQ00000002',
-      requester: {
-        user_id: '0000000000000000ibmtech3',
-        company_id: '111111111111111111111ibm',
-      },
       description:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
       status: 'active',
@@ -215,10 +207,6 @@ export const data = {
     },
     {
       name: 'REQ00000003',
-      requester: {
-        user_id: '000000000000000delltech2',
-        company_id: '11111111111111111111dell',
-      },
       description:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
       status: 'active',
@@ -246,10 +234,6 @@ export const data = {
     },
     {
       name: 'REQ00000004',
-      requester: {
-        user_id: '000000000000000delltech1',
-        company_id: '11111111111111111111dell',
-      },
       description:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
       status: 'active',
@@ -272,13 +256,9 @@ export const data = {
     },
     {
       name: 'REQ00000005',
-      requester: {
-        user_id: '000000000000000delltech3',
-        company_id: '11111111111111111111dell',
-      },
       description:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
-      status: 'active',
+      status: 'pending',
       window: {
         start: new Date(2023, 3, 15, 10, 0),
         end: new Date(2023, 3, 16, 16, 0),
@@ -298,10 +278,6 @@ export const data = {
     },
     {
       name: 'REQ00000006',
-      requester: {
-        user_id: '0000000000000000ibmtech2',
-        company_id: '111111111111111111111ibm',
-      },
       description:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
       status: 'active',
@@ -324,10 +300,6 @@ export const data = {
     },
     {
       name: 'REQ00000007',
-      requester: {
-        user_id: '0000000000000000ibmtech3',
-        company_id: '111111111111111111111ibm',
-      },
       description:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
       status: 'pending',
@@ -355,10 +327,6 @@ export const data = {
     },
     {
       name: 'REQ00000008',
-      requester: {
-        user_id: '0000000000000000ibmtech1',
-        company_id: '111111111111111111111ibm',
-      },
       description:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
       status: 'pending',
@@ -376,10 +344,6 @@ export const data = {
     },
     {
       name: 'REQ00000009',
-      requester: {
-        user_id: '0000000000000000000dcops',
-        company_id: '111111111111111111client',
-      },
       description:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
       status: 'pending',
@@ -389,7 +353,7 @@ export const data = {
       },
       visitors: [
         {
-          user_id: '00000000000000000000guest',
+          user_id: '0000000000000000000guest',
           user_name: 'Guest Visitor',
           is_onsite: false,
         },
@@ -397,10 +361,6 @@ export const data = {
     },
     {
       name: 'REQ00000010',
-      requester: {
-        user_id: '0000000000000000000dcops',
-        company_id: '111111111111111111client',
-      },
       description:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
       status: 'cancelled',
@@ -410,7 +370,7 @@ export const data = {
       },
       visitors: [
         {
-          user_id: '00000000000000000000guest',
+          user_id: '0000000000000000000guest',
           user_name: 'Guest Visitor',
           is_onsite: false,
         },

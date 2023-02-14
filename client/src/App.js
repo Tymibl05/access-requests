@@ -5,6 +5,8 @@ import { SignIn } from './pages/signin/SignIn';
 import { Home } from './pages/home/Home';
 
 import './App.scss';
+import { Request } from './pages/request/Request';
+import { Nav } from './Nav';
 
 function App() {
   const {
@@ -12,21 +14,20 @@ function App() {
   } = useStore();
   return (
     <div id="App">
-      <nav>
-        <h2>Nav</h2>
-      </nav>
       {!user ? (
         <SignIn />
       ) : (
         <BrowserRouter>
+          <Nav />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/request/:req_id" element={<Request />} />
           </Routes>
+          <footer>
+            <h2>Footer</h2>
+          </footer>
         </BrowserRouter>
       )}
-      <footer>
-        <h2>Footer</h2>
-      </footer>
     </div>
   );
 }
