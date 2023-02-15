@@ -5,9 +5,6 @@
     &.client {
     }
     &.not_client {
-      .Visitors > .header > div {
-        display: none;
-      }
     }
     .Info,
     .Visitors,
@@ -46,6 +43,24 @@
       }
       h4 {
         margin-bottom: 0.5em;
+      }
+      .actions {
+        margin-top: 0.5em;
+        button {
+          margin-right: 1em;
+          padding: 0.5em;
+          border-radius: 4px;
+          &.approve {
+            color: var(--green1);
+            background-color: var(--green2);
+            border: 1px solid var(--green1);
+          }
+          &.deny {
+            color: var(--red1);
+            background-color: var(--red2);
+            border: 1px solid var(--red1);
+          }
+        }
       }
     }
     .Visitors {

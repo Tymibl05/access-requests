@@ -41,6 +41,12 @@ export const Request = () => {
             </h3>
             <h4>Description: </h4>
             <h5>{request.description}</h5>
+            {user.is_client && request.status === 'pending' && (
+              <div className="actions">
+                <button className="approve">Approve</button>
+                <button className="deny">Deny</button>
+              </div>
+            )}
           </div>
           <div className="Visitors">
             <div className="header">
