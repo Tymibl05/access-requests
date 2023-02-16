@@ -69,6 +69,12 @@
         align-items: center;
         gap: 1em;
         margin-bottom: 1em;
+        .selected {
+          color: var(--red1);
+          &.true {
+            color: var(--blue1);
+          }
+        }
         button {
           margin-right: 0.5em;
           padding: 0.25em;
@@ -87,6 +93,7 @@
           padding: 0.5em;
           border: 2px solid var(--gray2);
           border-radius: 8px;
+          &.selected,
           &:hover {
             color: var(--blue1);
             background-color: var(--blue2);
