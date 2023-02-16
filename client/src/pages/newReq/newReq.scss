@@ -1,0 +1,93 @@
+#NewReq {
+  .container {
+    h1 {
+      color: var(--blue1);
+    }
+    .Info,
+    .Visitors {
+      padding: 1em;
+      margin: 1em 0;
+      border: 2px solid var(--gray2);
+      input,
+      textarea {
+        padding: 0.5em;
+        color: var(--white);
+        background-color: transparent;
+        border: 2px solid var(--blue1);
+        border-radius: 6px;
+        outline: none;
+        &:focus {
+          border-color: var(--orange1);
+        }
+      }
+      h2,
+      h3 {
+        color: var(--orange1);
+      }
+    }
+
+    .Info {
+      h3 {
+        margin: 0.5em 0;
+      }
+      .window {
+        .header {
+          display: flex;
+          align-items: center;
+          gap: 1em;
+          b {
+            color: var(--blue1);
+          }
+        }
+        .dates {
+          display: flex;
+          gap: 1em;
+          h4 {
+            color: var(--blue1);
+            margin-bottom: 0.5em;
+          }
+        }
+      }
+      .description > textarea {
+        resize: none;
+      }
+    }
+
+    .Visitors {
+      .header {
+        display: flex;
+        gap: 1em;
+        margin-bottom: 1em;
+        div {
+          display: flex;
+          gap: 0.5em;
+        }
+      }
+      .results {
+        padding: 0.15em;
+        overflow-x: scroll;
+        button {
+          padding: 0.25em;
+          color: var(--blue1);
+          background-color: var(--blue2);
+          border: 1px solid var(--blue1);
+          border-radius: 4px;
+        }
+      }
+      .cards {
+        display: flex;
+        gap: 1em;
+        .vis {
+          min-width: 150px;
+          min-height: 200px;
+          padding: 0.5em;
+          border: 2px solid var(--gray2);
+          border-radius: 8px;
+          h3 {
+            color: var(--blue1);
+          }
+        }
+      }
+    }
+  }
+}

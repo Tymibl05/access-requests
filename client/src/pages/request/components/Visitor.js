@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 export const Visitor = ({ visitor, req_id, selected, setSelected }) => {
-  const [company, setCompany] = useState("");
+  const [company, setCompany] = useState('');
   const [badge, setBadge] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
-  const updateSelected = (e) => {
+  const selectHandler = () => {
     if (isSelected) {
       const update = selected.filter(
         (user) => user.user_id !== visitor.user_id
@@ -14,6 +14,14 @@ export const Visitor = ({ visitor, req_id, selected, setSelected }) => {
 
     return setIsSelected(!isSelected);
   };
+  useEffect(() => {
+    const isSelected = selected.filter(
+      (sel) => sel.user_id === visitor.user_id
+    );
+    if (isSelected.length > 0) return setIsSelected(true);
+    setIsSelected(false);
+  }, [selected, visitor.user_id]);
+
   useEffect(() => {
     if (visitor) {
       (async () => {
@@ -42,11 +50,13 @@ export const Visitor = ({ visitor, req_id, selected, setSelected }) => {
   }, [visitor, req_id]);
   return (
     <div
-      className={`visitor bounce ${isSelected && "selected"}`}
-      onClick={updateSelected}
+      className={`visitor bounce ${isSelected && 'selected'} ${
+        visitor.is_onsite && 'in'
+      }`}
+      onClick={selectHandler}
     >
-      <h4 className={`status ${visitor.is_onsite ? "in" : "out"}`}>
-        {visitor.is_onsite ? "In" : "Out"}
+      <h4 className={`status ${visitor.is_onsite ? 'in' : 'out'}`}>
+        {visitor.is_onsite ? 'In' : 'Out'}
       </h4>
       <h3>{visitor.user_name}</h3>
       <h4>{company}</h4>

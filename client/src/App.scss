@@ -15,14 +15,27 @@
       color: var(--red1);
       background-color: var(--white);
     }
-    input {
-      padding: 0.25em;
-      border-radius: 8px;
-      outline: none;
-      color: var(--white);
-      background-color: var(--gray3);
-      &:focus {
-        border-color: var(--blue1);
+    div {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      button {
+        padding: 0.5em;
+        font-weight: bold;
+        background-color: transparent;
+        color: var(--blue1);
+        border: 2px solid var(--blue1);
+        border-radius: 4px;
+      }
+      input {
+        padding: 0.25em;
+        border-radius: 8px;
+        outline: none;
+        color: var(--white);
+        background-color: var(--gray3);
+        &:focus {
+          border-color: var(--blue1);
+        }
       }
     }
   }

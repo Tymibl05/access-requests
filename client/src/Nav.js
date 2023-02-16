@@ -27,14 +27,17 @@ export const Nav = () => {
       <Link to="/">
         <h2>Access</h2>
       </Link>
-      <form onSubmit={submitSearch}>
-        <input
-          type="text"
-          name="search"
-          placeholder="Search for request..."
-          ref={searchRef}
-        />
-      </form>
+      <div>
+        <button onClick={() => navigate('/new-request')}>+ New Request</button>
+        <form onSubmit={submitSearch}>
+          <input
+            type="text"
+            name="search"
+            placeholder="Search for request..."
+            ref={searchRef}
+          />
+        </form>
+      </div>
     </nav>
   );
 };
