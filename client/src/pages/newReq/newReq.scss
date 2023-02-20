@@ -27,6 +27,7 @@
     }
 
     .Info {
+      position: relative;
       h3 {
         margin: 0.5em 0;
       }
@@ -50,6 +51,16 @@
       }
       .description > textarea {
         resize: none;
+      }
+      button {
+        position: absolute;
+        top: 1em;
+        right: 1em;
+        padding: 0.5em;
+        color: var(--green1);
+        background-color: var(--green2);
+        border: 1px solid var(--green1);
+        border-radius: 4px;
       }
     }
 
@@ -78,6 +89,7 @@
         display: flex;
         gap: 1em;
         .vis {
+          position: relative;
           min-width: 150px;
           min-height: 200px;
           padding: 0.5em;
@@ -85,6 +97,16 @@
           border-radius: 8px;
           h3 {
             color: var(--blue1);
+          }
+          button {
+            position: absolute;
+            bottom: 0.5em;
+            right: 0.5em;
+            padding: 0.5em;
+            color: var(--red1);
+            background-color: var(--red2);
+            border: 1px solid var(--red1);
+            border-radius: 8px;
           }
         }
       }
