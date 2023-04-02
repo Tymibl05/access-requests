@@ -12,6 +12,25 @@ export const Request = () => {
   const { req_id } = useParams();
   const [request, setRequest] = useState(null);
   const [selected, setSelected] = useState([]);
+
+  const [badges, setBadges] = useState([]);
+  const getBadges = async () => {
+    const url = 'http://localhost:5000/api/badges/available';
+    const res = await fetch(url);
+    if (!res.ok) {
+      const error = await res.json();
+      return console.log(error.message);
+    }
+    const result = await res.json();
+    return result;
+  };
+  useEffect(() => {
+    (async () => {
+      const badges = await getBadges();
+      setBadges(badges);
+    })();
+  }, []);
+
   useEffect(() => {
     if (req_id) {
       (async () => {
@@ -26,6 +45,7 @@ export const Request = () => {
       })();
     }
   }, [req_id]);
+
   const updateStatus = async (e) => {
     if (!request) return;
 
@@ -48,6 +68,7 @@ export const Request = () => {
     console.log(result.message);
     return setRequest({ ...request, status: status });
   };
+
   const updateAccess = (e) => {
     if (!request || request.status !== 'active' || selected.length === 0)
       return;
@@ -60,6 +81,7 @@ export const Request = () => {
       return console.log(`${selected[0].user_name} is ALREADY checked in.`);
     if (e.target.value === 'out' && !is_onsite)
       return console.log(`${selected[0].user_name} is NOT checked in.`);
+    // this only checks if they're checked in for t5his request NOT another one
 
     const url = `http://localhost:5000/api/requests/${request._id}/update-access`;
     selected.forEach(async (sel) => {
@@ -67,7 +89,11 @@ export const Request = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user: { _id: sel.user_id, is_onsite: !sel.is_onsite },
+          user: {
+            _id: sel.user_id,
+            is_onsite: !sel.is_onsite,
+            badge_id: sel.badge ? sel.badge._id : null,
+          },
         }),
       });
       if (!res.ok) {
@@ -85,6 +111,7 @@ export const Request = () => {
     });
     return setSelected([]);
   };
+
   return (
     <div id="Request">
       {request && (
@@ -143,7 +170,8 @@ export const Request = () => {
                   req_id={request._id}
                   selected={selected}
                   setSelected={setSelected}
-                  onClick={() => console.log('vis clicked')}
+                  badges={badges}
+                  setBadges={setBadges}
                 />
               ))}
             </div>

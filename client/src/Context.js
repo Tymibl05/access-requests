@@ -24,16 +24,6 @@ export const StoreProvider = ({ children }) => {
     const result = await res.json();
     return result;
   };
-  const getOnsite = async () => {
-    const url = 'http://localhost:5000/api/users/onsite';
-    const res = await fetch(url);
-    if (!res.ok) {
-      const error = await res.json();
-      return console.log(error.message);
-    }
-    const result = await res.json();
-    return result;
-  }
 
   const dispatch = {
     signin: async (res) => {
@@ -45,7 +35,6 @@ export const StoreProvider = ({ children }) => {
       });
     },
   };
-
   // const context = useMemo(() => state, [state]);
   const value = { state, dispatch };
   return <Store.Provider value={value}>{children}</Store.Provider>;

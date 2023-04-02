@@ -14,6 +14,21 @@ export const getReqById = async (req, res) => {
   const request = await reqCol.findOne({ _id: new ObjectId(req_id) });
   if (!request) return res.status(404).send({ message: 'Request Not Found' });
 
+  // aggregate pipe to add assigned badges into req.vis
+  const aggReq = await reqCol
+    .aggregate([
+      { $match: { _id: new ObjectId(req_id) } },
+      // {
+      //   $lookup: {
+      //     from: 'badges',
+      //     let: { visitors: '$visitors' },
+      //     pipeline: [{ $match }],
+      //   },
+      // },
+    ])
+    .toArray();
+  //console.log(aggReq);
+
   return res.send(request);
 };
 
@@ -57,12 +72,35 @@ export const updateAccess = async (req, res) => {
     return res.status(400).send({ message: 'Update Parameters Not Provided' });
 
   const reqCol = await getCol('requests');
-
   const updatedReq = await reqCol.updateOne(
     { _id: new ObjectId(req_id) },
     { $set: { 'visitors.$[elem].is_onsite': user.is_onsite } },
     { arrayFilters: [{ 'elem.user_id': user._id }] }
   );
+  if ((updatedReq.matchedCount || updatedReq.modifiedCount) === 0)
+    return res.status(400).send({ message: 'Request Not Found' });
+
+  const badgeCol = await getCol('badges');
+  if (user.is_onsite && user.badge_id) {
+    const updateBadge = await badgeCol.updateOne(
+      { _id: new ObjectId(user.badge_id) },
+      { $set: { is_available: false, assigned_to: user._id } }
+    );
+    if ((updateBadge.matchedCount || updateBadge.modifiedCount) === 0)
+      return res.status(400).send({ message: 'Error Assigning Badge' });
+  }
+  if (!user.is_onsite) {
+    const assignedBadge = await badgeCol.findOne({ assigned_to: user._id });
+    if (assignedBadge) {
+      const updateBadge = badgeCol.updateOne(
+        { assigned_to: user._id },
+        { $set: { is_available: false, assigned_to: false } }
+      );
+      if ((updateBadge.matchedCount || updateBadge.modifiedCount) === 0)
+        return res.status(400).send({ message: 'Badge Reset Error' });
+    }
+  }
+
   if ((updatedReq.matchedCount || updatedReq.modifiedCount) === 0)
     return res.status(400).send({ message: 'Request Not Found' });
 

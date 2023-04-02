@@ -1,6 +1,7 @@
 import { getCol } from '../../db/mongo.js';
 import { ObjectId } from 'mongodb';
 import express from 'express';
+import { getAvailable } from './controller.js';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -8,5 +9,7 @@ router.get('/', async (req, res) => {
   const badges = await col.find().toArray();
   res.send(badges);
 });
+
+router.get('/available', getAvailable);
 
 export default router;

@@ -97,6 +97,7 @@
           border: 2px solid var(--gray2);
           border-radius: 8px;
           &.in {
+            color: var(--green1);
             border-color: var(--green2);
           }
           &.selected {
@@ -117,9 +118,6 @@
               background-color: var(--red2);
             }
           }
-          h3 {
-            color: var(--blue1);
-          }
           h5 {
             display: inline-block;
             padding: 0.5em 0.75em;
@@ -127,6 +125,16 @@
             border-radius: 50%;
             color: var(--white);
             background-color: var(--gray2);
+          }
+          select {
+            margin: 8px 0;
+            color: var(--blue1);
+            background-color: var(--orange2);
+            border: 1px solid var(--orange1);
+            border-radius: 4px;
+            padding: 0.25em;
+            outline: none;
+            font-weight: 600;
           }
         }
       }

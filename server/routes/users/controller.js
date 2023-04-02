@@ -83,6 +83,8 @@ export const getOnsite = async (req, res) => {
       { $unwind: { path: '$badge', preserveNullAndEmptyArrays: true } },
       {
         $project: {
+          _id: 0,
+          user_id: '$_id',
           user_name: '$name',
           request: 1,
           company_name: '$company.name',
@@ -173,13 +175,18 @@ export const getUserBadge = async (req, res) => {
       },
       { $unwind: '$request' },
       {
-        $project: { badge_number: '$badge.number', request_id: '$request._id' },
+        $project: {
+          _id: 0,
+          _id: '$badge._id',
+          number: '$badge.number',
+          user_id: '$_id',
+          request_id: '$request._id',
+        },
       },
     ])
     .toArray();
 
-  if (agg.length === 0)
-    return res.status(404).send({ message: 'Badge Not Found' });
+  if (agg.length === 0) return res.send({});
 
   return res.send(agg[0]);
 };
