@@ -12,9 +12,9 @@ const formatDate = (date) => {
 const formatTime = (date) => {
   const d = new Date(date);
   // return XX:XX:XX
-  return `${d.getUTCHours() < 10 ? `0${d.getUTCHours()}` : d.getUTCHours()}
-      :${d.getUTCMinutes() < 10 ? `0${d.getUTCMinutes()}` : d.getUTCMinutes()}
-      :${d.getUTCSeconds() < 10 ? `0${d.getUTCSeconds()}` : d.getUTCSeconds()}`;
+  return `${d.getHours() < 10 ? `0${d.getHours()}` : d.getHours()}:${
+    d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()
+  }:${d.getSeconds() < 10 ? `0${d.getSeconds()}` : d.getSeconds()}`;
 };
 
 export const formatWindow = (startDate, endDate) => {
