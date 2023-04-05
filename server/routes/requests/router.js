@@ -8,7 +8,7 @@ import {
   updateStatus,
   updateAccess,
   newRequest,
-  getByStatus,
+  getByCompany,
 } from "./controller.js";
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
 router.get("/test", getRequests);
 router.get("/:req_id", getReqById);
 router.get("/by-name/:req_name", getReqByName);
-router.get("/by-status/:status/:comp_id", getByStatus);
+router.get("/by-company/:comp_id", getByCompany);
 router.post("/:req_id/update-status", updateStatus);
 router.post("/:req_id/update-access", updateAccess);
 router.post("/new", newRequest);

@@ -47,6 +47,9 @@
             color: var(--blue1);
             margin-bottom: 0.5em;
           }
+          input {
+            color-scheme: dark;
+          }
         }
       }
       .description > textarea {

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../Context';
-import { formatWindow } from '../../utils';
-import './newReq.scss';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useStore } from "../../Context";
+import { formatWindow } from "../../utils";
+import "./newReq.scss";
 
 export const NewReq = () => {
   const navigate = useNavigate();
@@ -11,16 +11,16 @@ export const NewReq = () => {
   } = useStore();
   const [employees, setEmployees] = useState([]); // each vis needs user_id + user_name
   const [selected, setSelected] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const results =
-    search === ''
+    search === ""
       ? []
       : employees.filter((emp) =>
           emp.user_name.toUpperCase().includes(search.toUpperCase())
         );
 
-  const [start, setStart] = useState('');
-  const [end, setEnd] = useState('');
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
 
   const updateSelected = (e) => {
     const emp_id = e.target.value;
@@ -48,10 +48,11 @@ export const NewReq = () => {
   }, [user.company_id]);
   const submitReq = async (e) => {
     e.preventDefault();
-    if (selected.length === 0) return console.log('No Visitors Selected');
+    if (selected.length === 0) return console.log("No Visitors Selected");
     const visitors = selected.map((sel) => ({
       user_id: sel.user_id,
       user_name: sel.user_name,
+      company_name: sel.company_name,
       is_onsite: false,
     }));
     const newReq = {
@@ -63,10 +64,10 @@ export const NewReq = () => {
       visitors: visitors,
     };
 
-    const url = 'http://localhost:5000/api/requests/new';
+    const url = "http://localhost:5000/api/requests/new";
     const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newReq),
     });
     if (!res.ok) {
@@ -88,7 +89,7 @@ export const NewReq = () => {
             <div className="window">
               <div className="header">
                 <h3>Window: </h3>
-                {(start && end) !== '' && <b>{formatWindow(start, end)}</b>}
+                {(start && end) !== "" && <b>{formatWindow(start, end)}</b>}
               </div>
               <div className="dates">
                 <div>

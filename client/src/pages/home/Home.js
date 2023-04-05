@@ -18,7 +18,7 @@ export const Home = () => {
   });
 
   const getRequests = async () => {
-    const url = "http://localhost:5000/api/requests";
+    const url = `http://localhost:5000/api/requests/by-company/${user.company_id}`;
     const res = await fetch(url);
     if (!res.ok) {
       const error = await res.json();

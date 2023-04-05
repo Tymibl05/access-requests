@@ -5,25 +5,42 @@ export const getRequests = async (req, res) => {
   return;
 };
 
-export const getByStatus = async (req, res) => {
+export const getByCompany = async (req, res) => {
   // USER AUTH - user.company_id
-  const { comp_id, status } = req.params;
+  const { comp_id } = req.params; // can remove params once user auth is added as company_id is in user object
   const compCol = await getCol("companies");
   const company = await compCol.findOne({ _id: comp_id });
   if (!company) return res.status(400).send({ message: "Company Not Found" });
 
   const reqCol = await getCol("requests");
-  const requests = company.is_client
-    ? reqCol.find({ status: status }).toArray()
-    : await reqCol
-        .aggregate([
-          {
-            $filter: {},
+  if (company.is_client) {
+    const requests = await reqCol.find().toArray();
+    return res.send(requests);
+  } else {
+    const comp = await compCol
+      .aggregate([
+        { $match: { _id: comp_id } },
+        {
+          $lookup: {
+            from: "users",
+            localField: "_id",
+            foreignField: "company_id",
+            as: "employees",
           },
-        ])
-        .toArray();
-
-  res.send(requests);
+        },
+        //{ $unwind: "$employees" }, //adding unwind will genereate a seperate doc for each emp with the reqs they're assigned.
+        {
+          $lookup: {
+            from: "requests",
+            localField: "employees._id",
+            foreignField: "visitors.user_id",
+            as: "requests",
+          },
+        },
+      ])
+      .toArray(); //this returns all company info including its employees and requests
+    return res.send(comp[0].requests);
+  }
 };
 
 export const getReqById = async (req, res) => {

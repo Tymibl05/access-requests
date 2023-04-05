@@ -9,7 +9,6 @@ export const Visitor = ({
   badges,
   setBadges,
 }) => {
-  const [company, setCompany] = useState("");
   const [badge, setBadge] = useState(null);
   const [isSelected, setIsSelected] = useState(false);
 
@@ -75,17 +74,6 @@ export const Visitor = ({
   useEffect(() => {
     if (visitor) {
       (async () => {
-        const url = `http://localhost:5000/api/users/${visitor.user_id}/company`;
-        const res = await fetch(url);
-        if (!res.ok) {
-          // const error = await res.json();
-          // console.log(error.message)
-          return;
-        }
-        const result = await res.json();
-        return setCompany(result.company_name);
-      })();
-      (async () => {
         const url = `http://localhost:5000/api/users/${visitor.user_id}/badge`;
         const res = await fetch(url);
         if (!res.ok) {
@@ -109,7 +97,7 @@ export const Visitor = ({
         {visitor.is_onsite ? "In" : "Out"}
       </h4>
       <h3>{visitor.user_name}</h3>
-      <h4>{company}</h4>
+      <h4>{visitor.company_name}</h4>
       {visitor.is_onsite && <h5>{badge ? badge.number : "Escort"}</h5>}
       {req_status === "active" && !visitor.is_onsite && isSelected && (
         <select onClick={(e) => e.stopPropagation()} onChange={badgeHandler}>
