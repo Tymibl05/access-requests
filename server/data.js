@@ -381,19 +381,19 @@ export const data = {
     {
       number: 1,
       access_level: 'data',
-      is_available: true,
+      is_available: false,
       assigned_to: '0000000000000000ibmtech3',
     },
     {
       number: 2,
       access_level: 'data',
-      is_available: true,
+      is_available: false,
       assigned_to: '000000000000000delltech1',
     },
     {
       number: 3,
       access_level: 'data',
-      is_available: true,
+      is_available: false,
       assigned_to: '000000000000000delltech2',
     },
     {

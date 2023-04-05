@@ -1,7 +1,7 @@
 import { getCol } from '../../db/mongo.js';
 import { ObjectId } from 'mongodb';
 import express from 'express';
-import { getAvailable } from './controller.js';
+import { byUser, getAvailable } from './controller.js';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -11,5 +11,6 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/available', getAvailable);
+router.get('/by-user/:user_id', byUser);
 
 export default router;

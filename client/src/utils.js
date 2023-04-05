@@ -5,12 +5,12 @@ const sameDate = (date1, date2) => {
   else return false;
 };
 const formatDate = (date) => {
-  const d = new Date(date);
+  const d = new Date(date); // FIX NEEDED
   //return MM/DD/YYY
   return `${d.getUTCMonth() + 1}/${d.getUTCDate()}/${d.getUTCFullYear()}`;
 };
 const formatTime = (date) => {
-  const d = new Date(date);
+  const d = new Date(date); // FIX NEEDED
   // return XX:XX:XX
   return `${d.getHours() < 10 ? `0${d.getHours()}` : d.getHours()}:${
     d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()

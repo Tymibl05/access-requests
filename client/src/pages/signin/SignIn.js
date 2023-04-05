@@ -17,7 +17,7 @@ export const SignIn = () => {
     });
     if (!res.ok) {
       const err = await res.json();
-      console.log(err.message);
+      alert(err.message);
       return;
     }
     const result = await res.json();

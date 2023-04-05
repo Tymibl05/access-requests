@@ -6,7 +6,6 @@ import {
   getOnsite,
   getUserName,
   getUserCompany,
-  getUserBadge,
 } from './controller.js';
 const router = express.Router();
 
@@ -20,6 +19,5 @@ router.post('/signin', signin);
 router.get('/onsite', getOnsite);
 router.get('/:user_id/name', getUserName);
 router.get('/:user_id/company', getUserCompany);
-router.get('/:user_id/badge', getUserBadge);
 
 export default router;
