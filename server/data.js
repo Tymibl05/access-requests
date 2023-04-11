@@ -169,16 +169,19 @@ export const data = {
         {
           user_id: '00000000000000000mbarnes',
           user_name: 'Matt Barnes',
+          company_name: 'Costco Wholesale',
           is_onsite: true,
         },
         {
           user_id: '000000000000000000ctaber',
           user_name: 'Cathy Taber',
+          company_name: 'Costco Wholesale',
           is_onsite: true,
         },
         {
           user_id: '000000000000000000sleach',
           user_name: 'Steve Leach',
+          company_name: 'Costco Wholesale',
           is_onsite: false,
         },
       ],
@@ -196,11 +199,13 @@ export const data = {
         {
           user_id: '0000000000000000ibmtech3',
           user_name: 'IBM Tech 3',
+          company_name: 'IBM',
           is_onsite: true,
         },
         {
           user_id: '0000000000000000ibmtech1',
           user_name: 'IBM Tech 1',
+          company_name: 'IBM',
           is_onsite: false,
         },
       ],
@@ -218,16 +223,19 @@ export const data = {
         {
           user_id: '000000000000000delltech1',
           user_name: 'Dell Tech 1',
+          company_name: 'Dell Corporation',
           is_onsite: true,
         },
         {
           user_id: '000000000000000delltech2',
           user_name: 'Dell Tech 2',
+          company_name: 'Dell Corporation',
           is_onsite: true,
         },
         {
           user_id: '000000000000000delltech3',
           user_name: 'Dell Tech 3',
+          company_name: 'Dell Corporation',
           is_onsite: false,
         },
       ],
@@ -245,11 +253,13 @@ export const data = {
         {
           user_id: '000000000000000delltech1',
           user_name: 'Dell Tech 1',
+          company_name: 'Dell Corporation',
           is_onsite: false,
         },
         {
           user_id: '000000000000000delltech2',
           user_name: 'Dell Tech 2',
+          company_name: 'Dell Corporation',
           is_onsite: false,
         },
       ],
@@ -267,11 +277,13 @@ export const data = {
         {
           user_id: '000000000000000delltech3',
           user_name: 'Dell Tech 3',
+          company_name: 'Dell Corporation',
           is_onsite: false,
         },
         {
           user_id: '000000000000000delltech2',
           user_name: 'Dell Tech 2',
+          company_name: 'Dell Corporation',
           is_onsite: false,
         },
       ],
@@ -289,11 +301,13 @@ export const data = {
         {
           user_id: '0000000000000000ibmtech2',
           user_name: 'IBM Tech 2',
+          company_name: 'IBM',
           is_onsite: false,
         },
         {
           user_id: '0000000000000000ibmtech3',
           user_name: 'IBM Tech 3',
+          company_name: 'IBM',
           is_onsite: false,
         },
       ],
@@ -311,16 +325,19 @@ export const data = {
         {
           user_id: '0000000000000000ibmtech3',
           user_name: 'IBM Tech 3',
+          company_name: 'IBM',
           is_onsite: false,
         },
         {
           user_id: '0000000000000000ibmtech1',
           user_name: 'IBM Tech 1',
+          company_name: 'IBM',
           is_onsite: false,
         },
         {
           user_id: '0000000000000000ibmtech2',
           user_name: 'IBM Tech 2',
+          company_name: 'IBM',
           is_onsite: false,
         },
       ],
@@ -338,6 +355,7 @@ export const data = {
         {
           user_id: '0000000000000000ibmtech1',
           user_name: 'IBM Tech 1',
+          company_name: 'IBM',
           is_onsite: false,
         },
       ],
@@ -355,6 +373,7 @@ export const data = {
         {
           user_id: '0000000000000000000guest',
           user_name: 'Guest Visitor',
+          company_name: 'Guest',
           is_onsite: false,
         },
       ],
@@ -372,6 +391,7 @@ export const data = {
         {
           user_id: '0000000000000000000guest',
           user_name: 'Guest Visitor',
+          company_name: 'Guest',
           is_onsite: false,
         },
       ],
@@ -441,7 +461,7 @@ export const data = {
   ],
   logs: [
     {
-      type: '', // user, company, request, badge
+      collection: '', // user, company, request, badge
       action: '', // crud
       message: '',
     }, // addLog(type, action, message)

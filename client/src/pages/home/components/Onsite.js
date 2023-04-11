@@ -10,10 +10,17 @@ export const Onsite = ({ onsite }) => {
       <div className="visitors">
         {onsite &&
           onsite.map((vis) => (
-            <Link to={`/request/${vis.request._id}`} key={vis.user_name}>
-              <div key={vis.user_name} value={vis.request._id} className="vis">
-                <h4>{vis.user_name}</h4>
-                <h5>{vis.company_name}</h5>
+            <Link
+              to={`/request/${vis.request._id}`}
+              key={vis.visitor.user_name}
+            >
+              <div
+                key={vis.visitor.user_name}
+                value={vis.request._id}
+                className="vis"
+              >
+                <h4>{vis.visitor.user_name}</h4>
+                <h5>{vis.visitor.company_name}</h5>
                 <h6>{vis.request.name}</h6>
                 <p>
                   {vis.badge_number ? `Badge: ${vis.badge_number}` : 'Escort'}

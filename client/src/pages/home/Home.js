@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useStore } from "../../Context";
-import { Onsite } from "./components/Onsite";
-import { Active } from "./components/Active";
-import { Pending } from "./components/Pending";
+import React, { useState, useEffect } from 'react';
+import { useStore } from '../../Context';
+import { Onsite } from './components/Onsite';
+import { Active } from './components/Active';
+import { Pending } from './components/Pending';
 
-import "./home.scss";
+import './home.scss';
 
 export const Home = () => {
   const {
@@ -30,7 +30,7 @@ export const Home = () => {
   }; // getActive + getPending
 
   const getOnsite = async () => {
-    const url = "http://localhost:5000/api/users/onsite";
+    const url = 'http://localhost:5000/api/requests/onsite';
     const res = await fetch(url);
     if (!res.ok) {
       const error = await res.json();
@@ -49,8 +49,8 @@ export const Home = () => {
   useEffect(() => {
     const filterReqs = () => {
       if (!requests) return;
-      const active = requests.filter((req) => req.status === "active");
-      const pending = requests.filter((req) => req.status === "pending");
+      const active = requests.filter((req) => req.status === 'active');
+      const pending = requests.filter((req) => req.status === 'pending');
       const newFiltered = { active: active, pending: pending };
       setFiltered(newFiltered);
     };
@@ -59,7 +59,7 @@ export const Home = () => {
 
   return (
     <div id="Home">
-      <div className={`container ${user.is_client ? "client" : "not_client"}`}>
+      <div className={`container ${user.is_client ? 'client' : 'not_client'}`}>
         {user.is_client && <Onsite onsite={onsite} />}
         <Active active={filtered.active} />
         <Pending pending={filtered.pending} />

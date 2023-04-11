@@ -1,18 +1,14 @@
-import { ObjectId } from "mongodb";
-import { getCol } from "../../db/mongo.js";
-
-export const getRequests = async (req, res) => {
-  return;
-};
+import { ObjectId } from 'mongodb';
+import { getCol } from '../../db/mongo.js';
 
 export const getByCompany = async (req, res) => {
   // USER AUTH - user.company_id
   const { comp_id } = req.params; // can remove params once user auth is added as company_id is in user object
-  const compCol = await getCol("companies");
+  const compCol = await getCol('companies');
   const company = await compCol.findOne({ _id: comp_id });
-  if (!company) return res.status(400).send({ message: "Company Not Found" });
+  if (!company) return res.status(400).send({ message: 'Company Not Found' });
 
-  const reqCol = await getCol("requests");
+  const reqCol = await getCol('requests');
   if (company.is_client) {
     const requests = await reqCol.find().toArray();
     return res.send(requests);
@@ -22,19 +18,19 @@ export const getByCompany = async (req, res) => {
         { $match: { _id: comp_id } },
         {
           $lookup: {
-            from: "users",
-            localField: "_id",
-            foreignField: "company_id",
-            as: "employees",
+            from: 'users',
+            localField: '_id',
+            foreignField: 'company_id',
+            as: 'employees',
           },
         },
         //{ $unwind: "$employees" }, //adding unwind will genereate a seperate doc for each emp with the reqs they're assigned.
         {
           $lookup: {
-            from: "requests",
-            localField: "employees._id",
-            foreignField: "visitors.user_id",
-            as: "requests",
+            from: 'requests',
+            localField: 'employees._id',
+            foreignField: 'visitors.user_id',
+            as: 'requests',
           },
         },
       ])
@@ -46,11 +42,11 @@ export const getByCompany = async (req, res) => {
 export const getReqById = async (req, res) => {
   const { req_id } = req.params;
   if (req_id.length !== 24)
-    return res.status(400).send({ message: "Request Does Not Exist" });
+    return res.status(400).send({ message: 'Request Does Not Exist' });
 
-  const reqCol = await getCol("requests");
+  const reqCol = await getCol('requests');
   const request = await reqCol.findOne({ _id: new ObjectId(req_id) });
-  if (!request) return res.status(404).send({ message: "Request Not Found" });
+  if (!request) return res.status(404).send({ message: 'Request Not Found' });
 
   // aggregate pipe to add assigned badges into req.vis
   const aggReq = await reqCol
@@ -73,43 +69,59 @@ export const getReqById = async (req, res) => {
 export const getReqByName = async (req, res) => {
   const { req_name } = req.params;
 
-  const reqCol = await getCol("requests");
+  const reqCol = await getCol('requests');
   const request = await reqCol.findOne({ name: req_name });
-  if (!request) return res.status(404).send({ message: "Request Not Found" });
+  if (!request) return res.status(404).send({ message: 'Request Not Found' });
 
   return res.send(request);
 };
 
 export const updateStatus = async (req, res) => {
+  // ADD AUTH -> only user.is_client can update
+
   const { req_id } = req.params;
   if (req_id.length !== 24)
-    return res.status(400).send({ message: "Request Does Not Exist" });
+    return res.status(400).send({ message: 'Request Does Not Exist' });
 
   const { status } = req.body;
   if (!status)
-    return res.status(400).send({ message: "Update Parameters Not Provided" });
+    return res.status(400).send({ message: 'Update Parameters Not Provided' });
 
-  const reqCol = await getCol("requests");
+  const reqCol = await getCol('requests');
   const updatedReq = await reqCol.updateOne(
     { _id: new ObjectId(req_id) },
     { $set: { status: status } }
   );
   if ((updatedReq.matchedCount || updatedReq.modifiedCount) === 0)
-    return res.status(400).send({ message: "Request Not Found" });
+    return res.status(400).send({ message: 'Request Not Found' });
+  
+  // ADD LOG
+  const request = await reqCol.findOne({_id: new ObjectId(req_id)})
+  const message = `<User> has changed ${request.name}'s status to '${status}'.`
 
-  return res.send({ message: `${req_id} update successful.` });
+  const logCol = await getCol('logs')
+  const insertLog = await logCol.insertOne({
+    timestamp: new Date.now(),
+    type: 'request',
+    ref_id: request._id,
+    messag: message,
+    type: update
+  })
+  if(!insertLog.acknowledged) return res.status(404).send({message: 'Error inserting log'})
+
+  return res.send({ message: `${req_id} update successful.`, log:  });
 };
 
 export const updateAccess = async (req, res) => {
   // Params Check
   const { req_id } = req.params;
   if (req_id.length !== 24)
-    return res.status(400).send({ message: "Request Does Not Exist" });
+    return res.status(400).send({ message: 'Request Does Not Exist' });
   const { user } = req.body;
   if (!user)
-    return res.status(400).send({ message: "Update Parameters Not Provided" });
+    return res.status(400).send({ message: 'Update Parameters Not Provided' });
 
-  const reqCol = await getCol("requests");
+  const reqCol = await getCol('requests');
   //* Check if user is already checked into another req
   const onsiteCheck = await reqCol
     .find({
@@ -126,21 +138,21 @@ export const updateAccess = async (req, res) => {
   // UPDATE VISITOR
   const updatedReq = await reqCol.updateOne(
     { _id: new ObjectId(req_id) },
-    { $set: { "visitors.$[elem].is_onsite": user.is_onsite } },
-    { arrayFilters: [{ "elem.user_id": user._id }] }
+    { $set: { 'visitors.$[elem].is_onsite': user.is_onsite } },
+    { arrayFilters: [{ 'elem.user_id': user._id }] }
   );
   if ((updatedReq.matchedCount || updatedReq.modifiedCount) === 0)
-    return res.status(400).send({ message: "Request Not Found" });
+    return res.status(400).send({ message: 'Request Not Found' });
 
   // UPDATE BADGE
-  const badgeCol = await getCol("badges");
+  const badgeCol = await getCol('badges');
   if (user.is_onsite && user.badge_id) {
     const updateBadge = await badgeCol.updateOne(
       { _id: new ObjectId(user.badge_id) },
       { $set: { is_available: false, assigned_to: user._id } }
     );
     if ((updateBadge.matchedCount || updateBadge.modifiedCount) === 0)
-      return res.status(400).send({ message: "Error Assigning Badge" });
+      return res.status(400).send({ message: 'Error Assigning Badge' });
   }
   if (!user.is_onsite) {
     const assignedBadge = await badgeCol.findOne({ assigned_to: user._id });
@@ -150,7 +162,7 @@ export const updateAccess = async (req, res) => {
         { $set: { is_available: true, assigned_to: false } }
       );
       if ((updateBadge.matchedCount || updateBadge.modifiedCount) === 0)
-        return res.status(400).send({ message: "Badge Reset Error" });
+        return res.status(400).send({ message: 'Badge Reset Error' });
     }
   }
 
@@ -160,23 +172,23 @@ export const updateAccess = async (req, res) => {
 export const newRequest = async (req, res) => {
   const { description, visitors, window } = req.body;
 
-  const compCol = await getCol("companies");
+  const compCol = await getCol('companies');
   const updateCount = await compCol.updateOne(
     { is_client: true },
     { $inc: { req_counter: 1 } }
   );
   if ((updateCount.matchedCount || updateCount.modifiedCount) === 0)
-    return res.status(400).send({ message: "Inc Req Count Error" });
+    return res.status(400).send({ message: 'Inc Req Count Error' });
   const client = await compCol.findOne(
     { is_client: true },
     { projection: { _id: 0, req_counter: 1 } }
   );
 
-  const reqCol = await getCol("requests");
+  const reqCol = await getCol('requests');
   const newReq = await reqCol.insertOne({
     name: `REQ000000${client.req_counter}`,
     description: description,
-    status: "pending",
+    status: 'pending',
     window: {
       start: window.start,
       end: window.end,
@@ -185,8 +197,56 @@ export const newRequest = async (req, res) => {
   });
 
   if (!newReq.acknowledged)
-    return res.status(500).send({ message: "Error inserting request" });
+    return res.status(500).send({ message: 'Error inserting request' });
 
   return res.send({ _id: newReq.insertedId });
   // return res.send({ message: 'Request Added' });
+};
+
+export const getOnsite = async (req, res) => {
+  //ADD AUTH -> // const { user } = req.body;
+
+  const reqCol = await getCol('requests');
+
+  const agg = await reqCol
+    .aggregate([
+      { $match: { 'visitors.is_onsite': true } },
+      {
+        $project: {
+          visitors: {
+            $filter: {
+              input: '$visitors',
+              as: 'visitor',
+              cond: { $eq: ['$$visitor.is_onsite', true] },
+            },
+          },
+          _id: 0,
+          'request._id': '$_id',
+          'request.name': '$name',
+          'request.start': '$window.start',
+          'request.end': '$window.end',
+        },
+      },
+      { $unwind: '$visitors' },
+      {
+        $lookup: {
+          from: 'badges',
+          localField: 'visitors.user_id',
+          foreignField: 'assigned_to',
+          as: 'badge',
+        },
+      },
+      { $unwind: { path: '$badge', preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          _id: 0,
+          request: 1,
+          visitor: '$visitors',
+          badge_number: '$badge.number',
+        },
+      },
+    ])
+    .toArray();
+
+  res.send(agg);
 };

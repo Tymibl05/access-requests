@@ -10,8 +10,23 @@ export const Request = () => {
     state: { user },
   } = useStore();
   const { req_id } = useParams();
-  const [request, setRequest] = useState(null);
   const [selected, setSelected] = useState([]);
+
+  const [request, setRequest] = useState(null);
+  useEffect(() => {
+    if (req_id) {
+      (async () => {
+        const url = `http://localhost:5000/api/requests/by-id/${req_id}`;
+        const res = await fetch(url);
+        if (!res.ok) {
+          const error = await res.json();
+          return alert(error.message);
+        }
+        const result = await res.json();
+        return setRequest(result);
+      })();
+    }
+  }, [req_id]);
 
   const [badges, setBadges] = useState([]);
   const getBadges = async () => {
@@ -30,21 +45,6 @@ export const Request = () => {
       setBadges(badges);
     })();
   }, []);
-
-  useEffect(() => {
-    if (req_id) {
-      (async () => {
-        const url = `http://localhost:5000/api/requests/${req_id}`;
-        const res = await fetch(url);
-        if (!res.ok) {
-          const error = await res.json();
-          return console.log(error.message);
-        }
-        const result = await res.json();
-        return setRequest(result);
-      })();
-    }
-  }, [req_id]);
 
   const updateStatus = async (e) => {
     if (!request) return;

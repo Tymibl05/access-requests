@@ -9,4 +9,20 @@ router.get('/', async (req, res) => {
   res.send(logs);
 });
 
+router.get('/create-schema', async (req, res) => {
+  const schema = {
+    $jsonSchema: {
+      title: 'Log of user activity',
+      description: 'This document records the activity performed by a user',
+      type: 'object',
+      properties: {
+        collection: {},
+        type: {},
+        message: {},
+        timestamp: '',
+      },
+    },
+  };
+});
+
 export default router;
