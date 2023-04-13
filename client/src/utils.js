@@ -4,12 +4,12 @@ const sameDate = (date1, date2) => {
   if (d1.getTime() === d2.getTime()) return true;
   else return false;
 };
-const formatDate = (date) => {
+export const formatDate = (date) => {
   const d = new Date(date); // FIX NEEDED
   //return MM/DD/YYY
   return `${d.getUTCMonth() + 1}/${d.getUTCDate()}/${d.getUTCFullYear()}`;
 };
-const formatTime = (date) => {
+export const formatTime = (date) => {
   const d = new Date(date); // FIX NEEDED
   // return XX:XX:XX
   return `${d.getHours() < 10 ? `0${d.getHours()}` : d.getHours()}:${

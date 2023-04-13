@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useStore } from '../../Context';
-import { formatWindow } from '../../utils';
+import { formatDate, formatTime, formatWindow } from '../../utils';
 import { Visitor } from './components/Visitor';
 import './request.scss';
 
@@ -46,6 +46,20 @@ export const Request = () => {
     })();
   }, []);
 
+  const [logs, setLogs] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const url = `http://localhost:5000/api/logs/by-request/${req_id}`;
+      const res = await fetch(url);
+      if (!res.ok) {
+        const error = await res.json();
+        return alert(error.message);
+      }
+      const result = await res.json();
+      return setLogs(result);
+    })();
+  }, [req_id]);
+
   const updateStatus = async (e) => {
     if (!request) return;
 
@@ -62,11 +76,13 @@ export const Request = () => {
     });
     if (!res.ok) {
       const error = await res.json();
-      return console.log(error.message);
+      return alert(error.message);
     }
     const result = await res.json();
     console.log(result.message);
-    return setRequest({ ...request, status: status });
+    setRequest({ ...request, status: status });
+    setLogs([...logs, result.log]);
+    return;
   };
 
   const updateAccess = (e) => {
@@ -74,10 +90,10 @@ export const Request = () => {
       new Date(request.window.start).toISOString() < new Date().toISOString() ||
       new Date().toISOString() > new Date(request.window.end).toISOString()
     )
-      alert('Cannot update access outside request window!');
+      if (!request || request.status !== 'active' || selected.length === 0)
+        //alert('Cannot update access outside request window!');
 
-    if (!request || request.status !== 'active' || selected.length === 0)
-      return;
+        return;
     for (let i = selected.length - 1; i > 0; i--) {
       if (selected[i].is_onsite !== selected[i - 1].is_onsite)
         return alert('Input error');
@@ -96,11 +112,12 @@ export const Request = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user: {
+          visitor: {
             _id: sel.user_id,
             name: sel.user_name,
             is_onsite: !sel.is_onsite,
             badge_id: sel.badge ? sel.badge._id : null,
+            badge_num: sel.badge ? sel.badge.number : null,
           },
         }),
       });
@@ -108,14 +125,15 @@ export const Request = () => {
         const error = await res.json();
         return alert(error.message);
       }
-      // const result = await res.json();
-      // console.log(result.message);
+      const result = await res.json();
+      setLogs([result.log, ...logs]);
+      setRequest(result.updatedRequest);
 
-      const updateReq = request;
-      updateReq.visitors.forEach((vis) => {
-        if (vis.user_id === sel.user_id) vis.is_onsite = !vis.is_onsite;
-      });
-      setRequest({ ...updateReq });
+      // const updateReq = request;
+      // updateReq.visitors.forEach((vis) => {
+      //   if (vis.user_id === sel.user_id) vis.is_onsite = !vis.is_onsite;
+      // });
+      // setRequest({ ...updateReq });
     });
     return setSelected([]);
   };
@@ -187,6 +205,15 @@ export const Request = () => {
           </div>
           <div className="Logs">
             <h2>Activity Log</h2>
+            {logs.map((log) => (
+              <div key={log._id}>
+                <b>
+                  {`${formatDate(log.timestamp)} ${formatTime(log.timestamp)}`}{' '}
+                  :{' '}
+                </b>
+                <span>{log.message}</span>
+              </div>
+            ))}
           </div>
         </div>
       )}

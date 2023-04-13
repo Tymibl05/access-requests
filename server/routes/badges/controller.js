@@ -17,9 +17,9 @@ export const byUser = async (req, res) => {
   const badgeCol = await getCol('badges');
   const badge = await badgeCol.findOne(
     { assigned_to: user_id },
-    { projection: { number: 1, user_id: '$assigned_to' } }
+    { projection: { number: 1 } }
   );
-  if (!badge) return res.send({});
+  if (!badge) return res.send(null);
 
   return res.send(badge);
 };

@@ -21,9 +21,9 @@ export const Visitor = ({
           return;
         }
         const result = await res.json();
-        if (result.number) return setBadge(result);
+        return setBadge(result);
       })();
-    }
+    } else return setBadge(null);
   }, [visitor, req_id]);
 
   const [isSelected, setIsSelected] = useState(false);

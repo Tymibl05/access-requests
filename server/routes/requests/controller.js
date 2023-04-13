@@ -94,22 +94,25 @@ export const updateStatus = async (req, res) => {
   );
   if ((updatedReq.matchedCount || updatedReq.modifiedCount) === 0)
     return res.status(400).send({ message: 'Request Not Found' });
-  
-  // ADD LOG
-  const request = await reqCol.findOne({_id: new ObjectId(req_id)})
-  const message = `<User> has changed ${request.name}'s status to '${status}'.`
 
-  const logCol = await getCol('logs')
-  const insertLog = await logCol.insertOne({
-    timestamp: new Date.now(),
+  // ADD LOG
+  const request = await reqCol.findOne({ _id: new ObjectId(req_id) });
+  const newLog = {
+    timestamp: Date.now(),
     type: 'request',
     ref_id: request._id,
-    messag: message,
-    type: update
-  })
-  if(!insertLog.acknowledged) return res.status(404).send({message: 'Error inserting log'})
+    message: `<User> has changed ${request.name}'s status to '${status}'.`,
+  };
 
-  return res.send({ message: `${req_id} update successful.`, log:  });
+  const logCol = await getCol('logs');
+  const insertLog = await logCol.insertOne(newLog);
+  if (!insertLog.acknowledged)
+    return res.status(404).send({ message: 'Error inserting log' });
+
+  return res.send({
+    message: `${request.name} update successful.`,
+    log: { ...newLog, _id: insertLog.insertedId },
+  });
 };
 
 export const updateAccess = async (req, res) => {
@@ -117,20 +120,20 @@ export const updateAccess = async (req, res) => {
   const { req_id } = req.params;
   if (req_id.length !== 24)
     return res.status(400).send({ message: 'Request Does Not Exist' });
-  const { user } = req.body;
-  if (!user)
+  const { visitor } = req.body;
+  if (!visitor)
     return res.status(400).send({ message: 'Update Parameters Not Provided' });
 
   const reqCol = await getCol('requests');
   //* Check if user is already checked into another req
   const onsiteCheck = await reqCol
     .find({
-      visitors: { $elemMatch: { user_id: user._id, is_onsite: true } },
+      visitors: { $elemMatch: { user_id: visitor._id, is_onsite: true } },
     })
     .toArray();
-  if (user.is_onsite && onsiteCheck.length > 0)
+  if (visitor.is_onsite && onsiteCheck.length > 0)
     return res.status(400).send({
-      message: `${user.name} is ALREADY checked in for ${onsiteCheck[0].name}`,
+      message: `${visitor.name} is ALREADY checked in for ${onsiteCheck[0].name}`,
     });
 
   //* Check if request is wthin window
@@ -138,27 +141,27 @@ export const updateAccess = async (req, res) => {
   // UPDATE VISITOR
   const updatedReq = await reqCol.updateOne(
     { _id: new ObjectId(req_id) },
-    { $set: { 'visitors.$[elem].is_onsite': user.is_onsite } },
-    { arrayFilters: [{ 'elem.user_id': user._id }] }
+    { $set: { 'visitors.$[elem].is_onsite': visitor.is_onsite } },
+    { arrayFilters: [{ 'elem.user_id': visitor._id }] }
   );
   if ((updatedReq.matchedCount || updatedReq.modifiedCount) === 0)
     return res.status(400).send({ message: 'Request Not Found' });
 
   // UPDATE BADGE
   const badgeCol = await getCol('badges');
-  if (user.is_onsite && user.badge_id) {
+  if (visitor.is_onsite && visitor.badge_id) {
     const updateBadge = await badgeCol.updateOne(
-      { _id: new ObjectId(user.badge_id) },
-      { $set: { is_available: false, assigned_to: user._id } }
+      { _id: new ObjectId(visitor.badge_id) },
+      { $set: { is_available: false, assigned_to: visitor._id } }
     );
     if ((updateBadge.matchedCount || updateBadge.modifiedCount) === 0)
       return res.status(400).send({ message: 'Error Assigning Badge' });
   }
-  if (!user.is_onsite) {
-    const assignedBadge = await badgeCol.findOne({ assigned_to: user._id });
+  if (!visitor.is_onsite) {
+    const assignedBadge = await badgeCol.findOne({ assigned_to: visitor._id });
     if (assignedBadge) {
       const updateBadge = badgeCol.updateOne(
-        { assigned_to: user._id },
+        { assigned_to: visitor._id },
         { $set: { is_available: true, assigned_to: false } }
       );
       if ((updateBadge.matchedCount || updateBadge.modifiedCount) === 0)
@@ -166,7 +169,32 @@ export const updateAccess = async (req, res) => {
     }
   }
 
-  return res.send({ message: `${req_id} update successful.` });
+  // ADD LOG
+  const request = await reqCol.findOne({ _id: new ObjectId(req_id) });
+  const action = visitor.is_onsite ? 'checked in' : 'checked out';
+  const badge =
+    visitor.is_onsite && visitor.badge_num ? visitor.badge_num : null;
+  const message = !badge
+    ? `<User> has ${action} ${visitor.name} for ${request.name}.`
+    : `<User> has ${action} ${visitor.name} for ${request.name} with badge ${badge}.`;
+
+  const newLog = {
+    timestamp: Date.now(),
+    type: 'request',
+    ref_id: request._id,
+    message: message,
+  };
+
+  const logCol = await getCol('logs');
+  const insertLog = await logCol.insertOne(newLog);
+  if (!insertLog.acknowledged)
+    return res.status(404).send({ message: 'Error inserting log' });
+
+  return res.send({
+    message: `${req_id} update successful.`,
+    updatedRequest: request,
+    log: { ...newLog, _id: insertLog.insertedId },
+  });
 };
 
 export const newRequest = async (req, res) => {
@@ -199,8 +227,28 @@ export const newRequest = async (req, res) => {
   if (!newReq.acknowledged)
     return res.status(500).send({ message: 'Error inserting request' });
 
-  return res.send({ _id: newReq.insertedId });
-  // return res.send({ message: 'Request Added' });
+  // ADD LOG
+  const request = await reqCol.findOne({
+    _id: new ObjectId(newReq.insertedId),
+  });
+  const message = `<User> submitted new request '${request.name}' for approval.`;
+  const newLog = {
+    timestamp: Date.now(),
+    type: 'request',
+    ref_id: request._id,
+    message: message,
+  };
+
+  const logCol = await getCol('logs');
+  const insertLog = await logCol.insertOne(newLog);
+  if (!insertLog.acknowledged)
+    return res.status(404).send({ message: 'Error inserting log' });
+
+  return res.send({
+    message: 'Request Added',
+    _id: newReq.insertedId,
+    log: { ...newLog, _id: insertLog.insertedId },
+  });
 };
 
 export const getOnsite = async (req, res) => {
