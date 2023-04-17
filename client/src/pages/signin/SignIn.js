@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStore } from '../../Context';
+import './signin.scss';
 
 export const SignIn = () => {
   const { dispatch } = useStore();

@@ -12,6 +12,7 @@ export const NewReq = () => {
   const [employees, setEmployees] = useState([]); // each vis needs user_id + user_name
   const [selected, setSelected] = useState([]);
   const [search, setSearch] = useState('');
+
   const results =
     search === ''
       ? []

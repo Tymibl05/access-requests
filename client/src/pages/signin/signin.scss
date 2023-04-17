@@ -1,0 +1,27 @@
+#SignIn {
+  display: flex;
+  justify-content: center;
+  .card {
+    margin-top: 20vh;
+    padding: 1em;
+    border-radius: 4px;
+    color: var(--gray1);
+    background-color: var(--gray3);
+    form > div {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5em;
+      margin: 1em 0;
+      input {
+        padding: 0.25em;
+      }
+    }
+    form > button {
+      padding: 0.5em;
+      background-color: transparent;
+      color: var(--green1);
+      border: 2px solid var(--green1);
+      border-radius: 4px;
+    }
+  }
+}

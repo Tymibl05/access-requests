@@ -1,5 +1,6 @@
 #NewReq {
   .container {
+    padding: 1em;
     h1 {
       color: var(--blue1);
     }
@@ -53,6 +54,7 @@
         }
       }
       .description > textarea {
+        max-width: 100%;
         resize: none;
       }
       button {
@@ -91,6 +93,7 @@
       .cards {
         display: flex;
         gap: 1em;
+        overflow-x: scroll;
         .vis {
           position: relative;
           min-width: 150px;
@@ -113,6 +116,17 @@
           }
         }
       }
+    }
+  }
+
+  @media screen and (max-width: 769px) {
+    .Info {
+      .window > .dates {
+        flex-direction: column;
+      }
+    }
+    .Visitors > .header {
+      flex-direction: column;
     }
   }
 }

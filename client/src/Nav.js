@@ -28,7 +28,7 @@ export const Nav = () => {
         <h2>Access</h2>
       </Link>
       <div>
-        <button onClick={() => navigate('/new-request')}>+ New Request</button>
+        <button onClick={() => navigate('/new-request')}>+ New</button>
         <form onSubmit={submitSearch}>
           <input
             type="text"

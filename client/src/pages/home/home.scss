@@ -1,4 +1,5 @@
 #Home {
+  padding: 1em;
   .container {
     // LAYOUT
     display: grid;
@@ -14,6 +15,7 @@
     .Pending {
       grid-column: 1/3;
     }
+
     // STYLES
     .Onsite,
     .Active {
@@ -51,7 +53,6 @@
         border-color: var(--blue1);
         h2 {
           color: var(--blue1);
-          background-color: var(--blue2);
         }
       }
       .visitors {
@@ -79,7 +80,6 @@
         border-color: var(--green1);
         h2 {
           color: var(--green1);
-          background-color: var(--green2);
         }
         .filters {
           display: flex;
@@ -120,7 +120,6 @@
         border-color: var(--orange1);
         h2 {
           color: var(--orange1);
-          background-color: var(--orange2);
         }
       }
       .requests {
@@ -142,6 +141,45 @@
           h3,
           h5 {
             color: var(--orange1);
+          }
+        }
+      }
+    }
+
+    // MEDIA
+    @media screen and (max-width: 769px) {
+      display: flex;
+      flex-direction: column;
+      .Onsite,
+      .Active,
+      .Pending {
+        height: unset;
+        .header {
+          text-align: center;
+        }
+      }
+      .Onsite {
+        .visitors {
+          display: flex;
+          gap: 0.5em;
+          overflow-x: scroll;
+          .vis {
+            min-height: 100%;
+            min-width: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+        }
+      }
+      .Active {
+        max-height: 50vh;
+        .header {
+          .filters {
+            display: none;
+          }
+          h2 {
+            width: 100%;
           }
         }
       }
