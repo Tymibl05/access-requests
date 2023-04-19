@@ -37,7 +37,7 @@ export const NewReq = () => {
 
   useEffect(() => {
     (async () => {
-      const url = `http://localhost:5000/api/companies/${user.company_id}/get-employees`;
+      const url = `/api/companies/${user.company_id}/get-employees`;
       const res = await fetch(url);
       if (!res.ok) {
         const error = await res.json();
