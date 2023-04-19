@@ -19,7 +19,7 @@
     // STYLES
     .Onsite,
     .Active {
-      height: 55vh;
+      max-height: 55vh;
       .header {
         background-color: var(--gray4);
         position: sticky;

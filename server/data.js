@@ -121,7 +121,7 @@ export const data = {
       is_client: true,
       is_trusted: true,
       admins: ['0000000000000000000dcops', '00000000000000000dmiller'],
-      req_counter: 11,
+      req_counter: 2,
     },
     {
       _id: '111111111111111111costco',
@@ -157,14 +157,14 @@ export const data = {
   ],
   requests: [
     {
-      name: 'REQ0000001', // REQ00000000
+      name: 'REQ0000001',
       description:
         'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
-      status: 'active', // active, pending, completed, cancelled
+      status: 'active',
       window: {
-        start: new Date(2023, 2, 11, 8, 0),
-        end: new Date(2023, 3, 11, 18, 0),
-      }, // new Date(year, month , day , hours , minutes , seconds, milliseconds);
+        start: new Date(2023, 4, 20, 8, 0),
+        end: new Date(2023, 4, 21, 18, 0),
+      },
       visitors: [
         {
           user_id: '00000000000000000mbarnes',
@@ -186,235 +186,25 @@ export const data = {
         },
       ],
     },
-    {
-      name: 'REQ00000002',
-      description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
-      status: 'active',
-      window: {
-        start: new Date(2023, 8, 15, 8, 0),
-        end: new Date(2023, 8, 17, 14, 0),
-      },
-      visitors: [
-        {
-          user_id: '0000000000000000ibmtech3',
-          user_name: 'IBM Tech 3',
-          company_name: 'IBM',
-          is_onsite: true,
-        },
-        {
-          user_id: '0000000000000000ibmtech1',
-          user_name: 'IBM Tech 1',
-          company_name: 'IBM',
-          is_onsite: false,
-        },
-      ],
-    },
-    {
-      name: 'REQ00000003',
-      description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
-      status: 'active',
-      window: {
-        start: new Date(2023, 2, 11, 10, 0),
-        end: new Date(2023, 2, 11, 16, 0),
-      },
-      visitors: [
-        {
-          user_id: '000000000000000delltech1',
-          user_name: 'Dell Tech 1',
-          company_name: 'Dell Corporation',
-          is_onsite: true,
-        },
-        {
-          user_id: '000000000000000delltech2',
-          user_name: 'Dell Tech 2',
-          company_name: 'Dell Corporation',
-          is_onsite: true,
-        },
-        {
-          user_id: '000000000000000delltech3',
-          user_name: 'Dell Tech 3',
-          company_name: 'Dell Corporation',
-          is_onsite: false,
-        },
-      ],
-    },
-    {
-      name: 'REQ00000004',
-      description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
-      status: 'active',
-      window: {
-        start: new Date(2023, 5, 11, 8, 0),
-        end: new Date(2023, 5, 11, 14, 0),
-      },
-      visitors: [
-        {
-          user_id: '000000000000000delltech1',
-          user_name: 'Dell Tech 1',
-          company_name: 'Dell Corporation',
-          is_onsite: false,
-        },
-        {
-          user_id: '000000000000000delltech2',
-          user_name: 'Dell Tech 2',
-          company_name: 'Dell Corporation',
-          is_onsite: false,
-        },
-      ],
-    },
-    {
-      name: 'REQ00000005',
-      description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
-      status: 'pending',
-      window: {
-        start: new Date(2023, 3, 15, 10, 0),
-        end: new Date(2023, 3, 16, 16, 0),
-      },
-      visitors: [
-        {
-          user_id: '000000000000000delltech3',
-          user_name: 'Dell Tech 3',
-          company_name: 'Dell Corporation',
-          is_onsite: false,
-        },
-        {
-          user_id: '000000000000000delltech2',
-          user_name: 'Dell Tech 2',
-          company_name: 'Dell Corporation',
-          is_onsite: false,
-        },
-      ],
-    },
-    {
-      name: 'REQ00000006',
-      description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
-      status: 'active',
-      window: {
-        start: new Date(2023, 3, 14, 8, 0),
-        end: new Date(2023, 3, 14, 14, 0),
-      },
-      visitors: [
-        {
-          user_id: '0000000000000000ibmtech2',
-          user_name: 'IBM Tech 2',
-          company_name: 'IBM',
-          is_onsite: false,
-        },
-        {
-          user_id: '0000000000000000ibmtech3',
-          user_name: 'IBM Tech 3',
-          company_name: 'IBM',
-          is_onsite: false,
-        },
-      ],
-    },
-    {
-      name: 'REQ00000007',
-      description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
-      status: 'pending',
-      window: {
-        start: new Date(2023, 5, 11, 8, 0),
-        end: new Date(2023, 5, 11, 14, 0),
-      },
-      visitors: [
-        {
-          user_id: '0000000000000000ibmtech3',
-          user_name: 'IBM Tech 3',
-          company_name: 'IBM',
-          is_onsite: false,
-        },
-        {
-          user_id: '0000000000000000ibmtech1',
-          user_name: 'IBM Tech 1',
-          company_name: 'IBM',
-          is_onsite: false,
-        },
-        {
-          user_id: '0000000000000000ibmtech2',
-          user_name: 'IBM Tech 2',
-          company_name: 'IBM',
-          is_onsite: false,
-        },
-      ],
-    },
-    {
-      name: 'REQ00000008',
-      description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
-      status: 'pending',
-      window: {
-        start: new Date(2023, 5, 11, 8, 0),
-        end: new Date(2023, 5, 11, 14, 0),
-      },
-      visitors: [
-        {
-          user_id: '0000000000000000ibmtech1',
-          user_name: 'IBM Tech 1',
-          company_name: 'IBM',
-          is_onsite: false,
-        },
-      ],
-    },
-    {
-      name: 'REQ00000009',
-      description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
-      status: 'pending',
-      window: {
-        start: new Date(2023, 5, 11, 8, 0),
-        end: new Date(2023, 5, 11, 14, 0),
-      },
-      visitors: [
-        {
-          user_id: '0000000000000000000guest',
-          user_name: 'Guest Visitor',
-          company_name: 'Guest',
-          is_onsite: false,
-        },
-      ],
-    },
-    {
-      name: 'REQ00000010',
-      description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta earum a exercitationem, eligendi voluptate voluptatum sint suscipit sequi, mollitia similique odio iure enim, quo repellendus.',
-      status: 'cancelled',
-      window: {
-        start: new Date(2023, 5, 11, 8, 0),
-        end: new Date(2023, 5, 11, 14, 0),
-      },
-      visitors: [
-        {
-          user_id: '0000000000000000000guest',
-          user_name: 'Guest Visitor',
-          company_name: 'Guest',
-          is_onsite: false,
-        },
-      ],
-    },
   ],
   badges: [
     {
       number: 1,
       access_level: 'data',
-      is_available: false,
-      assigned_to: '0000000000000000ibmtech3',
+      is_available: true,
+      assigned_to: false,
     },
     {
       number: 2,
       access_level: 'data',
-      is_available: false,
-      assigned_to: '000000000000000delltech1',
+      is_available: true,
+      assigned_to: false,
     },
     {
       number: 3,
       access_level: 'data',
-      is_available: false,
-      assigned_to: '000000000000000delltech2',
+      is_available: true,
+      assigned_to: false,
     },
     {
       number: 4,
@@ -461,9 +251,10 @@ export const data = {
   ],
   logs: [
     {
-      collection: '', // user, company, request, badge
-      action: '', // crud
+      timestamp: Date.now(),
+      type: '',
+      ref_id: '',
       message: '',
-    }, // addLog(type, action, message)
+    },
   ],
 };

@@ -206,7 +206,7 @@ export const Request = () => {
           <div className="Logs">
             <h2>Activity Log</h2>
             {logs.map((log) => (
-              <div key={log._id}>
+              <div key={log._id} className="message">
                 <b>
                   {`${formatDate(log.timestamp)} ${formatTime(log.timestamp)}`}{' '}
                   :{' '}
