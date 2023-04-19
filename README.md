@@ -1,6 +1,6 @@
 # App Name
 
-This project was created by [name](https://).
+This project was created by [Tyler Blease](https://www.linkedin.com/in/tyler-blease/).
 
 ## App Functions
 
@@ -12,11 +12,15 @@ In the app, you can:
 
 This app was created using:
 
-### `HTML, CSS, JS`
+### `HTML5, CSS3, JS`
 
 ### `SCSS`
 
 ### `React.JS`
+
+### `Express.JS`
+
+### `MongoDB`
 
 ## More About Me
 

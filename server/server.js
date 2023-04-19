@@ -10,8 +10,8 @@ import badgeRouter from './routes/badges/router.js';
 import logRouter from './routes/logs/router.js';
 import path from 'path';
 
+//** CONFIG */
 dotenv.config();
-
 const port = process.env.PORT || 5000;
 const app = express();
 app.use(express.json());
@@ -21,6 +21,7 @@ app.listen(port, () => {
   connectDb();
 });
 
+//** ROUTES */
 app.get('/api', async (req, res) => res.send('API'));
 app.use('/api/users', userRouter);
 app.use('/api/companies', companyRouter);
