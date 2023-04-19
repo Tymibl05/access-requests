@@ -15,7 +15,7 @@ export const StoreProvider = ({ children }) => {
   });
 
   const getBadges = async () => {
-    const url = 'http://localhost:5000/api/badges';
+    const url = '/api/badges';
     const res = await fetch(url);
     if (!res.ok) {
       const error = await res.json();

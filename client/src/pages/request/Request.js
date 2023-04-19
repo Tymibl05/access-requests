@@ -16,7 +16,7 @@ export const Request = () => {
   useEffect(() => {
     if (req_id) {
       (async () => {
-        const url = `http://localhost:5000/api/requests/by-id/${req_id}`;
+        const url = `/api/requests/by-id/${req_id}`;
         const res = await fetch(url);
         if (!res.ok) {
           const error = await res.json();
@@ -30,7 +30,7 @@ export const Request = () => {
 
   const [badges, setBadges] = useState([]);
   const getBadges = async () => {
-    const url = 'http://localhost:5000/api/badges/available';
+    const url = '/api/badges/available';
     const res = await fetch(url);
     if (!res.ok) {
       const error = await res.json();
@@ -49,7 +49,7 @@ export const Request = () => {
   const [logs, setLogs] = useState([]);
   useEffect(() => {
     (async () => {
-      const url = `http://localhost:5000/api/logs/by-request/${req_id}`;
+      const url = `/api/logs/by-request/${req_id}`;
       const res = await fetch(url);
       if (!res.ok) {
         const error = await res.json();
@@ -68,7 +68,7 @@ export const Request = () => {
         ? 'active'
         : e.target.value === 'deny' && 'cancelled';
 
-    const url = `http://localhost:5000/api/requests/${request._id}/update-status`;
+    const url = `/api/requests/${request._id}/update-status`;
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -81,7 +81,7 @@ export const Request = () => {
     const result = await res.json();
     console.log(result.message);
     setRequest({ ...request, status: status });
-    setLogs([...logs, result.log]);
+    setLogs([result.log, ...logs]);
     return;
   };
 
@@ -106,7 +106,7 @@ export const Request = () => {
     // this only checks if they're checked in for this request NOT another one
     //** server check implemented to resolve this */
 
-    const url = `http://localhost:5000/api/requests/${request._id}/update-access`;
+    const url = `/api/requests/${request._id}/update-access`;
     selected.forEach(async (sel) => {
       const res = await fetch(url, {
         method: 'POST',

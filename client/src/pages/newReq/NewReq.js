@@ -71,7 +71,7 @@ export const NewReq = () => {
       visitors: visitors,
     };
 
-    const url = 'http://localhost:5000/api/requests/new';
+    const url = '/api/requests/new';
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

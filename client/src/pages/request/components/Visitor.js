@@ -13,7 +13,7 @@ export const Visitor = ({
   useEffect(() => {
     if (visitor && visitor.is_onsite) {
       (async () => {
-        const url = `http://localhost:5000/api/badges/by-user/${visitor.user_id}`;
+        const url = `/api/badges/by-user/${visitor.user_id}`;
         const res = await fetch(url);
         if (!res.ok) {
           // const error = await res.json();

@@ -18,7 +18,7 @@ export const Home = () => {
   });
 
   const getRequests = async () => {
-    const url = `http://localhost:5000/api/requests/by-company/${user.company_id}`;
+    const url = `/api/requests/by-company/${user.company_id}`;
     const res = await fetch(url);
     if (!res.ok) {
       const error = await res.json();
@@ -27,10 +27,10 @@ export const Home = () => {
     }
     const result = await res.json();
     return result;
-  }; // getActive + getPending
+  };
 
   const getOnsite = async () => {
-    const url = 'http://localhost:5000/api/requests/onsite';
+    const url = '/api/requests/onsite';
     const res = await fetch(url);
     if (!res.ok) {
       const error = await res.json();

@@ -7,7 +7,7 @@ export const SignIn = () => {
 
   const signin = async (e) => {
     e.preventDefault();
-    const url = 'http://localhost:5000/api/users/signin';
+    const url = '/api/users/signin';
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

@@ -10,7 +10,7 @@ export const Nav = () => {
       `${searchRef.current.value.slice(0, 3).toUpperCase()}` +
       `${searchRef.current.value.slice(3)}`;
     (async () => {
-      const url = `http://localhost:5000/api/requests/by-name/${search}`;
+      const url = `/api/requests/by-name/${search}`;
       const res = await fetch(url);
       if (!res.ok) {
         const error = await res.json();
