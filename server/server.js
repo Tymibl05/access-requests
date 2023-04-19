@@ -51,10 +51,9 @@ app.get('/api/reset', async (req, res) => {
 });
 
 //** Server Side Rendering Setup */
-// const dir = path.resolve();
-// const __dirname = dir.slice(0, -7); // removes /server from pathname
-// console.log(__dirname);
-// app.use(express.static(path.join(__dirname, './client/build')));
-// app.get('/api', (req, res) =>
-//   res.sendFile(path.join(__dirname, './client/build/index.html'))
-// );
+const dir = path.resolve();
+const __dirname = dir.slice(0, -7); // removes /server from pathname
+app.use(express.static(path.join(__dirname, './client/build')));
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, './client/build/index.html'))
+);
