@@ -8,7 +8,7 @@ import companyRouter from './routes/companies/router.js';
 import requestRouter from './routes/requests/router.js';
 import badgeRouter from './routes/badges/router.js';
 import logRouter from './routes/logs/router.js';
-// import path from 'path';
+import path from 'path';
 
 dotenv.config();
 
@@ -53,6 +53,7 @@ app.get('/api/reset', async (req, res) => {
 //** Server Side Rendering Setup */
 // const dir = path.resolve();
 // const __dirname = dir.slice(0, -7); // removes /server from pathname
+// console.log(__dirname);
 // app.use(express.static(path.join(__dirname, './client/build')));
 // app.get('/api', (req, res) =>
 //   res.sendFile(path.join(__dirname, './client/build/index.html'))
